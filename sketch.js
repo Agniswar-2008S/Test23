@@ -100,7 +100,7 @@ function preload(){
 
 function setup(){
 
-  createCanvas(windowWidth,windowHeight);
+  createCanvas(displayWidth,displayHeight);
  
   gadagroup = createGroup();
   monstergroup = createGroup();
@@ -274,25 +274,25 @@ hanug2.visible=false;
  //if(mousePressedOver(audiobutton)) {
   //sound.play();
 //}
-  hardb= createSprite(1200,240,0,0);
+  hardb= createSprite(1100,340,0,0);
    hardb. addImage(hards);
     hardb.scale=0.7;
-    hardb.debug=true;
-   hardb.setCollider("rectangle",0,-20,320,110);
+    //hardb.debug=true;
+   hardb.setCollider("rectangle",30,-10,320,90);
    hardb.visible=false;
 
-   mediumb= createSprite(1200,340,0,0); 
+   mediumb= createSprite(1100,440,0,0); 
    mediumb. addImage(mediums);
    mediumb.scale=0.7;
-   mediumb.setCollider("rectangle",20,-10,300,110);
-   mediumb.debug=true; 
+   mediumb.setCollider("rectangle",20,-20,350,90);
+   //mediumb.debug=true; 
    mediumb.visible=false;
 
-   easyb= createSprite(1200,440,0,0);
+   easyb= createSprite(1100,540,0,0);
    easyb. addImage(easys);
    easyb.scale=0.7;
-   easyb.setCollider("rectangle",30,-10,300,110);
-   easyb.debug=true;
+   easyb.setCollider("rectangle",30,-20,350,90);
+   //easyb.debug=true;
    easyb.visible=false; 
   
 }
@@ -387,16 +387,18 @@ hanug2.visible=false;
         //monstergroup.setVelocityYEach(-13);
         //monstergroup.setVelocityXEach(-13);
        //hardeee();
-       // chalisa.play();
+        chalisa.play();
         //playbutton initiation
       }
       if(mousePressedOver(mediumb)) {
         MC='M';
         gamestate="level1";
+        chalisa.play();
       }
       if(mousePressedOver(hardb)) {
         MC='H';
         gamestate="level1";
+        chalisa.play();
       }
       
       if(mousePressedOver(menu)) {
@@ -414,7 +416,8 @@ hanug2.visible=false;
         audiobutton.visible=false;
         audiobutton.x=6000;
         mutee.visible=true;
-        mutee.x=1200;
+        mutee.x=1400;
+        mutee.y=150;
       }
       if(mousePressedOver(mutee)) {
        // gamestate=home;
@@ -515,6 +518,7 @@ if(mousePressedOver(backbutton) ) {
 if(gamestate === "level1") {
    
   sound.stop();
+  //chalisa.play();
     Time=Time+Math.round(getFrameRate()/60);
   //console.log(World.frameRate);
  
@@ -571,7 +575,7 @@ if(gamestate === "level1") {
  
   if(monstergroup.isTouching(hanuman)){
    gamestate="end1";
-   chalisa.pause();
+   chalisa.stop();
 
    console.log("level1,monster")
  }
@@ -590,7 +594,7 @@ if(gamestate === "level1") {
  }
  console.log(gamestate);
 
- if(Time >= 1600 && World.frameCount % 100 == 0){
+ if(Time >= 600 && World.frameCount % 100 == 0){
   
   spawnbigmonster();
  // monstergroup.destroyEach();
@@ -709,7 +713,7 @@ if(gamestate=="level2"){
       hanuman.x=hanuman.x+30;
     }
 
-    if(Time > 2800){
+    if(Time > 900){
       spawnseamonster();
      // fishmonstergroup.destroyEach();
       //poisongroup.destroyEach();
@@ -835,6 +839,7 @@ if(gamestate== "level2.1"){
   monster2group.destroyEach();
   poisongroup.destroyEach();
   monster2group.destroyEach();
+  fireballgroup.destroyEach();
   tridentgroup.destroyEach();
 
   nextlevel2.x=1500;
@@ -923,6 +928,7 @@ if(gamestate=="level3"){
  mutee2.visible=true;
 
  fishmonstergroup.destroyEach();
+ fireballgroup.destroyEach();
  monster2group.destroyEach();
 
  //hanuman.debug=true;
@@ -976,7 +982,7 @@ if(gamestate=="level3"){
 
   
 
-  if(Time> 3800 && gadagroup.isTouching(monster3group)){
+  if(Time> 1300 && gadagroup.isTouching(monster3group)){
     gamestate="level3.1"
     monster3group.destroyEach();
     gadagroup.destroyEach();
@@ -1196,6 +1202,7 @@ if(gamestate == "end1" ){
     //monstergroup.setVelocityYEach(0);
     arrowgroup.destroyEach();
     monstergroup.destroyEach();
+    gadagroup.destroyEach();
     gameover.visible=true;
     bigmonstergroup.destroyEach();
 
@@ -1251,6 +1258,7 @@ if(gamestate == "end2"){
   fishmonstergroup.destroyEach();
   tridentgroup.destroyEach();
   airgroup.destroyEach();
+  fireballgroup.destroyEach();
   chalisa.stop();
   pause.visible=false;
   resume.visible=false;
@@ -1296,6 +1304,7 @@ if(gamestate == "end2"){
    sound.stop();
    chalisa.stop();
    monster2group.visible=false;
+   fireballgroup.destroyEach();
    
    
    pause.visible=false;
@@ -1354,7 +1363,7 @@ function spawnbigmonster(){
     bigmonster.velocityY=random(2,15);
   }
   bigmonster.scale=2.1;
-  bigmonster.lifetime=350;
+  bigmonster.lifetime=250;
   bigmonstergroup.add(bigmonster);
   bigmonstergroup.bounceOff(edges[2]);
   bigmonstergroup.bounceOff(edges[3]);
@@ -1363,12 +1372,12 @@ function spawnbigmonster(){
 
 function spawncyclops() {
   if (MC=='E'){
-    if(World.frameCount%150==0) {
+    if(World.frameCount%180==0) {
       var cyclops=createSprite(1300,random(150,500),0,0);
       cyclops.addImage(monster1img);
       cyclops.scale=0.7;
-      cyclops.velocityX=-2;
-      cyclops.velocityY=-2;
+      cyclops.velocityX=-3;
+      cyclops.velocityY=-3;
       // cyclops.debug=true;
       cyclops.setCollider("circle",0,0,120);
       
@@ -1379,7 +1388,7 @@ function spawncyclops() {
       var arrow=createSprite(1000,cyclops.y);
       arrow.addImage(arrowimg);
       arrow.scale=0.4;
-      arrow.velocityX=-3;
+      arrow.velocityX=-5;
       //arrow.debug=true;
       arrow.setCollider("rectangle",0,0, 50,50);
       arrowgroup.add(arrow);
@@ -1389,12 +1398,12 @@ function spawncyclops() {
     }
   }
   if (MC=='M'){
-    if(World.frameCount%150==0) {
+    if(World.frameCount%140==0) {
       var cyclops=createSprite(1300,random(150,500),0,0);
       cyclops.addImage(monster1img);
       cyclops.scale=0.7;
-      cyclops.velocityX=-8;
-      cyclops.velocityY=-8;
+      cyclops.velocityX=-9;
+      cyclops.velocityY=-9;
       // cyclops.debug=true;
       cyclops.setCollider("circle",0,0,120);
       
@@ -1405,7 +1414,7 @@ function spawncyclops() {
       var arrow=createSprite(1000,cyclops.y);
       arrow.addImage(arrowimg);
       arrow.scale=0.4;
-      arrow.velocityX=-12;
+      arrow.velocityX=-13;
       //arrow.debug=true;
       arrow.setCollider("rectangle",0,0, 50,50);
       arrowgroup.add(arrow);
@@ -1415,12 +1424,12 @@ function spawncyclops() {
     }
   }
   if (MC=='H'){
-    if(World.frameCount%150==0) {
+    if(World.frameCount%90==0) {
       var cyclops=createSprite(1300,random(150,500),0,0);
       cyclops.addImage(monster1img);
       cyclops.scale=0.7;
-      cyclops.velocityX=-12;
-      cyclops.velocityY=-12;
+      cyclops.velocityX=-14;
+      cyclops.velocityY=-14;
       // cyclops.debug=true;
       cyclops.setCollider("circle",0,0,120);
       
@@ -1431,7 +1440,7 @@ function spawncyclops() {
       var arrow=createSprite(1000,cyclops.y);
       arrow.addImage(arrowimg);
       arrow.scale=0.4;
-      arrow.velocityX=-14;
+      arrow.velocityX=-20;
       //arrow.debug=true;
       arrow.setCollider("rectangle",0,0, 50,50);
       arrowgroup.add(arrow);
@@ -1446,7 +1455,17 @@ function spawngada() {
   var gada=createSprite(hanuman.x,hanuman.y,0,0);
   gada.addImage(gadaimg);
   gada.scale=0.5;
-  gada.velocityX=5;
+  if(MC=='E'){
+    gada.velocityX=5;
+  }
+
+  if(MC=='M'){
+    gada.velocityX=6;
+  }
+
+  if(MC=='H'){
+    gada.velocityX=9;
+  }
   gada.lifetime=550;
  // gada.debug=true;
   gada.setCollider("rectangle",0,0,gada.width/4,gada.height);
@@ -1474,16 +1493,16 @@ if(World.frameCount%150==0) {
    fireball.addAnimation("fireballanime",fireballimg);
    fireball.scale=0.2;
    if(MC=='E'){
-   fireball.velocityX=-6;
-   fireball.velocityY=random(-1,-8);
+   fireball.velocityX=-5;
+   fireball.velocityY=random(-1,-7);
    }
    if(MC=='M'){
     fireball.velocityX=-10;
-    fireball.velocityY=random(-1,-14);
+    fireball.velocityY=random(-6,-14);
    }
    if(MC=='H'){
     fireball.velocityX=-15;
-    fireball.velocityY=random(-1,-20);
+    fireball.velocityY=random(-9,-20);
    }
    
    fireballgroup.add(fireball);
@@ -1497,23 +1516,29 @@ if(World.frameCount%150==0) {
 }
 
 function spawnfishmonster(){
-  if(World.frameCount % 60 ==0){
+  if(World.frameCount % 100 ==0){
     var fishmonster= createSprite(random(200,800),height-100,10,10);
     fishmonster.addImage(fishomnsterimg);
     //fishmonster.debug=true;
     fishmonster.setCollider("circle",0,0,40);
     fishmonster.scale=0.1;
     if(MC=='E'){
+     // if(World.frameCount % 140 ==0){
     fishmonster.velocityX=-5;
    // fishmonster.lifetime=800/10;
+      //}
     }
     if(MC=='M'){
+     // if(World.frameCount % 100 ==0){
       fishmonster.velocityX=-10;
      // fishmonster.lifetime=800/10;
+     // }
     }
     if(MC=='H'){
+     // if(World.frameCount % 80 ==0){
         fishmonster.velocityX=-15;
        // fishmonster.lifetime=800/10;
+     // }
     }
     var poison=createSprite(fishmonster.x,fishmonster.y);
     poison.addImage(poisonimg);
@@ -1569,8 +1594,8 @@ function spawnjunglemonster(){
     monster3.velocityY=-8;
   }
   if(MC=='H'){
-    monster3.velocityX=-13;
-    monster3.velocityY=-13;
+    monster3.velocityX=-14;
+    monster3.velocityY=-14;
   }
   // monster3.debug=true;
  // monster3.setCollider("circle",0,0,120);
@@ -1582,13 +1607,13 @@ function spawnjunglemonster(){
     sword.addImage(swordimage);
     sword.scale=0.8;
     if(MC=='E'){
-      sword.velocityX=-6;
+      sword.velocityX=-7;
     }
     if(MC=='M'){
-      sword.velocityX=-9;
+      sword.velocityX=-11;
     }
     if(MC=='H'){
-      sword.velocityX=-12;
+      sword.velocityX=-15;
     }
     swordgroup.add(sword);
     swordgroup.setLifetimeEach(300);
